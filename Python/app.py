@@ -5,7 +5,7 @@ import seaborn as sns
 from sqlalchemy import create_engine
 
 # Membuat koneksi ke PostgreSQL
-engine = create_engine('postgresql://postgres:Cfos%401234@localhost:5432/study_case_join')
+engine = create_engine('postgresql://{yourusername}:{yourpassword}@localhost:{yourlocalport}/{yourdatabase}')
 
 # Mengambil data dari PostgreSQL (Data Karyawan)
 query = "SELECT * FROM final_table"
@@ -122,3 +122,4 @@ if st.button("Cari Kandidat"):
 # Menampilkan informasi tambahan jika tidak ada data yang ditemukan
 else:
     st.write("Silakan pilih parameter pencarian untuk mencari kandidat.")
+
