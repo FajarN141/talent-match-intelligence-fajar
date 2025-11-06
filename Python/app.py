@@ -2,14 +2,20 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sqlalchemy import create_engine
+from supabase import create_client, Client
 
-# Membuat koneksi ke PostgreSQL
-engine = create_engine('postgresql://{yourusername}:{yourpassword}@localhost:{yourlocalport}/{yourdatabase}')
+# Gantilah dengan API URL dan API Key Supabase Anda
+url = "https://yvpymhjagagnafdornda.supabase.co"  # Salin URL dari Supabase
+key = "sb_publishable_whWDS6fkGnzzJiBWn8i4kg_8jy3aKdp"  # Salin anon key dari API Keys Supabase
 
-# Mengambil data dari PostgreSQL (Data Karyawan)
-query = "SELECT * FROM final_table"
-df = pd.read_sql(query, engine)
+# Membuat koneksi ke Supabase
+supabase: Client = create_client(url, key)
+
+# Mengambil data dari tabel "final_table" di Supabase
+response = supabase.table("final_table").select("*").execute()
+
+# Menyimpan hasil query ke dalam DataFrame
+df = pd.DataFrame(response.data)
 
 # Judul Aplikasi
 st.title("Employee Talent Match Rate")
@@ -122,4 +128,5 @@ if st.button("Cari Kandidat"):
 # Menampilkan informasi tambahan jika tidak ada data yang ditemukan
 else:
     st.write("Silakan pilih parameter pencarian untuk mencari kandidat.")
+
 
